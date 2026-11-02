@@ -93,8 +93,12 @@ func run() error {
 		defer func() { _ = srv.Close() }()
 	}
 
+	d := *delay
+	if d == 0 {
+		d = -1 // Config treats 0 as "use the default"; -delay 0 means no delay
+	}
 	cfg := crawler.Config{
-		UserAgent: *ua, Concurrency: *concurrency, DefaultDelay: *delay, MaxDelay: *maxDelay,
+		UserAgent: *ua, Concurrency: *concurrency, DefaultDelay: d, MaxDelay: *maxDelay,
 		MaxPages: *maxPages, MaxDepth: *maxDepth, SameHostOnly: *sameHost, Timeout: *timeout,
 		Metrics: m, Logger: log,
 	}

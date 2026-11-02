@@ -30,7 +30,7 @@ type Config struct {
 	UserAgent    string        // default "trawl/0.1 (+https://github.com/eshaan2418/trawl)"
 	RobotsToken  string        // product token matched against robots.txt groups; default "trawl"
 	Concurrency  int           // simultaneous fetches across hosts; default 16
-	DefaultDelay time.Duration // gap between fetches to one host; default 1s
+	DefaultDelay time.Duration // gap between fetches to one host; default 1s, negative = none
 	MaxDelay     time.Duration // cap on robots.txt Crawl-delay; default 30s
 	MaxPages     int           // stop after this many page fetches; default 1000
 	MaxDepth     int           // link depth from seeds; default 3 (negative: unlimited)
@@ -89,8 +89,11 @@ func New(cfg Config) *Crawler {
 	if cfg.Concurrency <= 0 {
 		cfg.Concurrency = 16
 	}
-	if cfg.DefaultDelay == 0 {
+	switch {
+	case cfg.DefaultDelay == 0:
 		cfg.DefaultDelay = time.Second
+	case cfg.DefaultDelay < 0:
+		cfg.DefaultDelay = 0 // explicit "no delay" (hosts are still fetched one at a time)
 	}
 	if cfg.MaxDelay == 0 {
 		cfg.MaxDelay = 30 * time.Second
