@@ -57,7 +57,9 @@ func Normalize(base *url.URL, ref string) (*url.URL, error) {
 	u.Fragment = ""
 	u.RawFragment = ""
 
-	p := u.EscapedPath()
+	// Decode unreserved escapes *before* resolving dot segments: "%2e" is ".", so "/%2e/x"
+	// must become "/x" in one pass (found by FuzzIdempotent in CI).
+	p := normalizeEscapes(u.EscapedPath())
 	if p == "" {
 		p = "/"
 	}
@@ -66,7 +68,6 @@ func Normalize(base *url.URL, ref string) (*url.URL, error) {
 	if trailing && p != "/" {
 		p += "/"
 	}
-	p = normalizeEscapes(p)
 	dec, err := url.PathUnescape(p)
 	if err != nil {
 		return nil, err

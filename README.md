@@ -44,8 +44,9 @@ that `warcio`, pywb, and CDX indexers can read.
   - The matcher is differentially fuzzed against a regexp reference.
 - **robots.txt costs a politeness slot.** The first page on a host waits one delay after the
   robots.txt request instead of following it immediately.
-- **Fuzzed URL normalisation.** An idempotence fuzzer found and fixed four canonicalisation
-  bugs (empty hosts, trailing dots, raw spaces, lone `%`). Any one of them would have caused
+- **Fuzzed URL normalisation.** An idempotence fuzzer found and fixed five canonicalisation
+  bugs (empty hosts, trailing dots, raw spaces, lone `%`, and `%2e` dot segments, the last one
+  found by CI). Any one of them would have caused
   duplicate fetches.
 - **Crash-safe WARC 1.1.**
   - One gzip member per record, with request/response pairs linked by `WARC-Concurrent-To`.

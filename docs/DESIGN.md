@@ -75,12 +75,14 @@ The scheme and host are lower-cased, and trailing dots and default ports are rem
 fragment is dropped, and dot segments are resolved while keeping a trailing slash. Percent-
 escapes are normalised, and bytes that are invalid in a query are escaped. Query parameter
 order is preserved, because reordering can change meaning. The fuzz test asserts idempotence,
-`Normalize(Normalize(x)) == Normalize(x)`, and it found four real bugs:
+`Normalize(Normalize(x)) == Normalize(x)`, and it found five real bugs:
 
 1. the host `.` normalised to an empty host;
 2. `host..` lost one dot per pass;
 3. raw spaces in queries were trimmed on re-parse;
-4. a lone `%` combined with a decoded escape to form a new one.
+4. a lone `%` combined with a decoded escape to form a new one;
+5. `%2e` was decoded to `.` after dot segments had been resolved (found by the CI fuzz run on
+   Linux), so escapes are now normalised first.
 
 ## Fetching
 

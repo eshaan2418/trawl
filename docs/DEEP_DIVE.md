@@ -66,7 +66,7 @@ Without normalisation the same page is crawled several times (`HTTP://Example.co
 yours. trawl lower-cases the scheme and host, removes default ports and trailing dots, drops
 fragments, resolves dot segments, and normalises percent-escapes. It does *not* sort query
 parameters: on real sites `?a=1&b=2` and `?b=2&a=1` can differ (signed URLs, order-dependent
-routing), and an archive must not merge them. The idempotence fuzzer found four bugs (DESIGN
+routing), and an archive must not merge them. The idempotence fuzzer found five bugs (DESIGN
 §URL normalisation). Each one would have produced duplicate fetches.
 
 ### 8. Why aren't redirects followed inline?
