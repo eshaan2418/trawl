@@ -1,0 +1,25 @@
+$ trawl -concurrency 16 -delay 100ms -max-pages 400 -warc demo.warc.gz <20 seeds>
+{
+ "pages": 400,
+ "pages_per_second": 126.69689205793009,
+ "robots_fetches": 20,
+ "robots_blocked": 56,
+ "status": {
+  "200": 398,
+  "301": 2
+ },
+ "warc_records": 801,
+ "errors": 0
+}
+server-side audit:
+{
+ "page_requests": 400,
+ "robots_violations": 0,
+ "nofollow_fetches": 0,
+ "duplicate_page_fetches": 0,
+ "min_gap_ms": 102.376708,
+ "min_gap_ms_by_class": {
+  "crawl-delay-0.2s": 203.065209,
+  "default": 102.376708
+ }
+}

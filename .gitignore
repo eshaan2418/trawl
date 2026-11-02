@@ -1,5 +1,3 @@
 NOTES.md
-/trawl
-/synthweb
+/bin/
 *.warc.gz
-bench/results/*.tmp
