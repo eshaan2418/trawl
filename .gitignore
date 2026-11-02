@@ -1,0 +1,5 @@
+NOTES.md
+/trawl
+/synthweb
+*.warc.gz
+bench/results/*.tmp
